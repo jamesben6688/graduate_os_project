@@ -1,0 +1,20 @@
+APP_DIR = .
+summary ?= @true
+
+sourcedir = src
+
+INCLUDE_DIRECTIVES = -I./${sourcedir} -I./${sourcedir}/default -I./${sourcedir}/test
+CC  =gcc
+
+SRCS=\
+	src/test/my_main1.c \
+  $(APP_DIR)/src/spiffs_cache.c  $(APP_DIR)/src/spiffs_check.c  $(APP_DIR)/src/spiffs_gc.c  $(APP_DIR)/src/spiffs_hydrogen.c  $(APP_DIR)/src/spiffs_nucleus.c
+
+CFLAGS=-g -Wall -Wextra -Wno-unused-parameter -Wno-unused-function -I. -I$(APP_DIR)/spiffs -I$(APP_DIR)/include -DNODEMCU_SPIFFS_NO_INCLUDE --include src/test/spiffs_typedefs.h -Ddbg_printf=printf
+
+spiffsimg: $(SRCS)
+	$(summary) HOSTCC $(CURDIR)/$<
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
+
+clean:
+	rm -f spiffsimg
