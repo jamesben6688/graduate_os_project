@@ -7,6 +7,8 @@ this_path = os.path.dirname(os.path.realpath(__file__))
 
 reach_page_limit = False
 
+myCmd = './run.sh'
+
 print(this_path)
 
 assert(0==os.system('cd "%s" && make spiffs_.so' % this_path))
@@ -403,6 +405,7 @@ def check_flag(spiffs_mount, page_limit):
         total_size += file[1]
         if total_size >= page_limit * spiffs_mount.log_page_size:
             reach_page_limit = True
+            os.system(myCmd)
             break
 
 def move_data():
