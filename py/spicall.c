@@ -5,7 +5,7 @@ int main()
    // Set PYTHONPATH TO working directory
    setenv("PYTHONPATH",".",1);
 
-   PyObject *pName, *pModule, *pDict, *pFunc, *pValue, *presult;
+   PyObject *pName, *pModule, *pDict, *pFunc1, *pFunc2, *pValue, *presult;
 
 
    // Initialize the Python Interpreter
@@ -24,16 +24,18 @@ int main()
 
 
    // pFunc is also a borrowed reference
-   pFunc = PyDict_GetItemString(pDict, (char*)"check_flag");
+   pFunc1 = PyDict_GetItemString(pDict, (char*)"check_flag");
+   PyErr_Print();
+   pFunc2 = PyDict_GetItemString(pDict, (char*)"move_data");
    PyErr_Print();
 
-   if (PyCallable_Check(pFunc))
+   if (PyCallable_Check(pFunc1))
    {
        pValue=Py_BuildValue("(z)",(char*)"check_flag");
        PyErr_Print();
        printf("Let's give this a shot!\n");
       // presult=PyObject_CallObject(pFunc,pValue);
-      presult = pFunc;
+      presult = pFunc1;
       // PyErr_Print();
    } else
    {
